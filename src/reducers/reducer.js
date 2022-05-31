@@ -2,8 +2,10 @@ import * as actionTypes from "../constants/actionTypes";
 import { evaluate } from "../utilities/evaluate";
 
 export const reducer = (state, { type, payload }) => {
+  console.log(payload, state.currentOperand, state.previousOperand);
   switch (type) {
     case actionTypes.ADD_DIGIT:
+      console.log("1");
       if (state.overwrite)
         return {
           ...state,
@@ -11,7 +13,7 @@ export const reducer = (state, { type, payload }) => {
           overwrite: false,
         };
 
-      if (Number(payload.value) === 0 && Number(state.currentOperand) === 0) {
+      if (payload.value === "0" && state.currentOperand === "0") {
         return state;
       }
       if (payload.value === "." && state.currentOperand == null) {
@@ -26,6 +28,7 @@ export const reducer = (state, { type, payload }) => {
         currentOperand: `${state.currentOperand || " "}${payload.value}`,
       };
     case actionTypes.CHOOSE_OPERATION:
+      console.log("2");
       if (state.currentOperand == null && state.previousOperand == null) {
         return state;
       }
